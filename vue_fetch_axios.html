@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0/axios.min.js"></script>
+</head>
+<body>
+    <div id="box1">
+        <ul v-for="data in datalist">
+            <li>{{data}}</li>
+        </ul>
+        <button @click="handleClick()"></button>
+        <hr>
+    </div>
+    
+    <script type='text/javascript'>
+        var jsonApi = "http://t.weather.sojson.com/api/weather/city/101030100"
+        var localJson = "./vue_fetch_axios_json_example.json"
+        var vm = new Vue({
+            el:"#box1",
+            data:{
+                datalist:[],
+            },
+            methods:{
+                // axios 返回的数据会被包装在data中
+                handleClick(){
+                    axios.get(localJson).then(function (res){
+                        console.log(res)
+                    }).catch(function(err){
+                        console.log(err)
+                    })
+                }
+            }
+        })
+
+        //fetch
+        /* fetch(jsonApi, {
+            method:'GET',
+            mode:'cors',// 允许发送跨域请求
+            credentials: 'include'
+        }).then(function(response){
+	        //打印返回的json数据
+	        response.json().then(function(data){
+                console.log(data);
+            })
+        }).catch(function(e){
+            console.log('error: ' + e.toString());
+        }) */
+    </script>
+</body>
+</html>
