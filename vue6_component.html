@@ -9,20 +9,45 @@
 </head>
 <body>
     <div id="box">
-        <navbar></navbar>
-        <sidebar></sidebar>
+        <!-- 控制组件是否显示 isShow -->
+        <div>
+            默认navbar：<navbar></navbar>
+        </div>
+        <div> 
+            传值到子false：<navbar :is-show="false"></navbar>
+        </div>
+        <div>
+            传值到子true：<navbar :is-show="true"></navbar>
+        </div>
+    
         <!-- 局部组件不能直接用于root -->
         <!-- <sidebarChild></sidebarChild> -->
+<br><br>
+        <!-- 组件传值 父->子 -->
+        <div>
+            sidebar主页部分：<sidebar show-location="mainPage"></sidebar>
+        </div>
+        <div>
+            sidebar联系方式：<sidebar show-location="contactPage"></sidebar>
+        </div>
+        <div>
+            sidebar关于我：<sidebar show-location="aboutMe"></sidebar>
+        </div>
+        
+        <!-- 组件传值 子->父 -->
+        <!-- 使用v-bind冒号绑定 -->
+        <sidebar :show-location="innerLocation"></sidebar>
     </div>
     <script>
         // 注册全局组件 navbar
         Vue.component("navbar",{
             template:
+            // 使用v-show布尔值控制主页button是否显示
             `
             <div>
                 <button @click="handleBack()">返回</button>
                 navbar
-                <button @click="handleHomepage()">主页</button>
+                <button @click="handleHomepage()" v-show="isShow">主页</button>
             </div>
             `,
             methods:{
@@ -32,7 +57,14 @@
                 handleHomepage(){
                     alert("go homepage")
                 },
-            }
+            },
+            // props中接收父->子组件传来的 isShow
+            // props:["is-show"],
+            
+            // add：属性验证，isShow必须传入布尔值
+            props:{
+                "is-show":Boolean
+            },
         })
 
         // 注册全局组件sidebar
@@ -40,7 +72,7 @@
             template:`
             <div> I'm a sidebar
                 <sidebarChild></sidebarChild>
-                
+                my location is {{showLocation}}
                 </div>
             `,
             components:{
@@ -48,10 +80,17 @@
                     template:`
                     <div style="background:yellow">sidebarChildContent</div>`
                 }
-            }
+            },
+            // 接收父->子组件到传值
+            props:["show-location"],
+            
         })
         var vm = new Vue({
             el:"#box",
+            // 定义数据，子->父
+            data:{
+                innerLocation:"childValueToFather"
+            }
         })
     </script>
 </body>
