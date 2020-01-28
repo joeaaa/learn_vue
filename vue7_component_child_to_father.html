@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        父组件
+        <child @my-event="handleEvent($event)"></child>
+    </div>
+
+    <script>
+        // 注册子组件
+        Vue.component("child",{
+            template:
+            `
+            <div>
+                <button @click="handleSendToFather()">点击子传父</button>
+                navbar                
+            </div>
+            `,
+            // 子组件data使用函数形式
+            data(){
+                return {
+                    childName:"子组件的状态"
+                }
+            },
+            methods:{
+                handleSendToFather(){
+                    this.$emit("my-event",this.childName)
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el:"#box",
+            methods:{
+                handleEvent(event){ //event: "子组件的状态"
+                    console.log("successfully send to father")
+                }
+            }
+        })
+    </script>
+</body>
+</html>
