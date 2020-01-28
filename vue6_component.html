@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <navbar></navbar>
+        <sidebar></sidebar>
+        <!-- 局部组件不能直接用于root -->
+        <!-- <sidebarChild></sidebarChild> -->
+    </div>
+    <script>
+        // 注册全局组件 navbar
+        Vue.component("navbar",{
+            template:
+            `
+            <div>
+                <button @click="handleBack()">返回</button>
+                navbar
+                <button @click="handleHomepage()">主页</button>
+            </div>
+            `,
+            methods:{
+                handleBack(){
+                    alert("go back")
+                },
+                handleHomepage(){
+                    alert("go homepage")
+                },
+            }
+        })
+
+        // 注册全局组件sidebar
+        Vue.component("sidebar",{
+            template:`
+            <div> I'm a sidebar
+                <sidebarChild></sidebarChild>
+                
+                </div>
+            `,
+            components:{
+                sidebarChild:{
+                    template:`
+                    <div style="background:yellow">sidebarChildContent</div>`
+                }
+            }
+        })
+        var vm = new Vue({
+            el:"#box",
+        })
+    </script>
+</body>
+</html>
