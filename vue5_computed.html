@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <!-- 模糊查询 -->
+    <div id="box1">
+        <input type="text" v-model="inputText">
+        <ul>
+            <li v-for="data in filterWordList">
+                {{data}}
+            </li>
+        </ul>
+    </div>
+    
+</body>
+
+<script>
+    var vm = new Vue({
+        el:"#box1",
+        data:{
+            inputText:'',
+            wordList:['aaa','bbb','ccc','abc','acc','abb','aac'],
+        },
+        computed:{
+            filterWordList(){
+                return this.wordList.filter(item=>
+                    item.indexOf(this.inputText)>-1
+                )
+            }
+        },
+    })
+</script>
+</html>
