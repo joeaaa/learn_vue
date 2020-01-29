@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <p>电视台：信息发布框</p>
+        <tv-station></tv-station>
+        <br>
+        <user></user>
+
+    </div>
+
+    <script>
+        // 定义中央事件总线
+        var bus = new Vue();
+        
+        // 定义电视台发布新闻
+        Vue.component("tv-station",{
+            template:`
+                <div>
+                    <input type="text" ref="tvNews">
+                    <button @click="handleClick()">发布</button>
+                </div>
+            `,
+            methods:{
+                handleClick(){
+                    var toPush = bus.$emit("news", this.$refs.tvNews.value)
+                }
+            },
+            
+        })
+
+        // 定义用户收看新闻
+        Vue.component("user",{
+            template:`
+                <div>
+                    <p style="background:red">user gotta receive</p>
+                </div>
+            `,
+            // 生命周期函数，当组件DOM创建完成后调用
+            mounted(){
+                bus.$on("news", (data) => {
+                    console.log("user received", data)
+                })
+            },    
+        })
+
+        // 初始化Vue
+        var vm = new Vue({
+            el:"#box", 
+        });
+
+    </script>
+    
+</body>
+</html>
