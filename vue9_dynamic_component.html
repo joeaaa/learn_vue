@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+
+        <!-- 使用keep-alive缓存不活动的组件实例，保持组件不被刷新 -->
+        <keep-alive>
+            <!-- 动态组件，is属性确定具体组件 -->
+            <component :is="location"></component>
+        </keep-alive>
+        
+        <!-- 通过点击按钮切换 -->
+        <footer>
+            <button @click="location='home'">homepage</button>
+            <button @click="location='contact'">contact</button>
+            <button @click="location='sales'">sales</button>
+        </footer>
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                // 页面显示location初始值
+                location:"home"
+            },
+            // 定义三个组件
+            components:{
+                "home":{
+                    template:`<div> homepage 
+                            <input type="text">
+                            </div>`
+                },
+                "contact":{
+                    template:`<div> contact </div>`
+                },
+                "sales":{
+                    template:`<div> sales </div>`
+                }
+            }
+        })
+    </script>
+</body>
+</html>
