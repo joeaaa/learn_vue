@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    
+        <!-- 轮播组件 -->
+        <slider>
+            <li v-for='data in datalist1'>{{data}}</li>
+            <div slot="a">a-content</div>
+            <div slot="b">b-content</div>
+        </slider>
+
+        <hr>
+        <slider>
+            <li v-for='data in datalist2'>{{data}}</li>
+            <div slot="b">b-content</div>
+        </slider>
+
+        <hr>
+        <slider>
+            <li v-for='data in datalist3'>{{data}}</li>
+            <div slot="a">a-content</div>
+            <div slot="b">b-content</div>
+        </slider>
+
+    </div>
+
+    <script>
+     
+        // 定义slider组件
+        Vue.component('slider',{
+            template:`
+                <div>
+                    <ul>
+                        <slot></slot>
+                        <!-- 只插入name为a的插槽 -->
+                        <slot name="a"></slot>
+                    </ul>
+                </div>
+            `
+        })
+
+        new Vue({
+            el:"#app",
+            data:{
+                datalist1:['aaa','bbb','ccc','ddd','abc','abd','acd','bcd'],
+                datalist2:[123,234,345],
+                datalist3:[001,010,100,011,101,110,111]
+            }
+        })
+    </script>
+</body>
+
+</html>
