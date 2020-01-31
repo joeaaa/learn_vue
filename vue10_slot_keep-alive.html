@@ -19,24 +19,14 @@
             <div slot="a">a-content</div>
             <div slot="b">b-content</div>
         </slider>
-
         <hr>
         <slider>
             <li v-for='data in datalist2'>{{data}}</li>
             <div slot="b">b-content</div>
         </slider>
-
-        <hr>
-        <slider>
-            <li v-for='data in datalist3'>{{data}}</li>
-            <div slot="a">a-content</div>
-            <div slot="b">b-content</div>
-        </slider>
-
     </div>
 
     <script>
-     
         // 定义slider组件
         Vue.component('slider',{
             template:`
@@ -46,16 +36,13 @@
                         <!-- 只插入name为a的插槽 -->
                         <slot name="a"></slot>
                     </ul>
-                </div>
-            `
+                </div>`
         })
-
         new Vue({
             el:"#app",
             data:{
-                datalist1:['aaa','bbb','ccc','ddd','abc','abd','acd','bcd'],
+                datalist1:['aaa','bbb','ccc'],
                 datalist2:[123,234,345],
-                datalist3:[001,010,100,011,101,110,111]
             }
         })
     </script>
