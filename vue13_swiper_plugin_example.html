@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src='./lib/vue.js'></script>
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"><script src="lib/swiper/js/swiper.js"></script>
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+        }  
+      
+        .swiper-slide img{
+          width: 100%;
+        }
+      </style>
+</head>
+
+<body>
+    <div id="app">
+        <swiper :key="datalist.length"> 
+            <div class="swiper-slide" v-for="data in datalist">
+                {{data}}
+            </div>
+        </swiper>
+    </div>
+  
+    <script type="text/javascript">
+        Vue.component("swiper",{
+            template:` 
+                <div :class="'swiper-container ' + which">
+                    <div class="swiper-wrapper">
+                        <slot></slot>
+                    </div>
+                    <!-- 如果需要分页器 -->
+                    <div class="swiper-pagination"></div>
+                </div>`,
+            data(){
+                return {
+                    which:"a"
+                }
+            },
+            mounted(){
+                new Swiper ('.a',{
+                    loop:true,
+                    // 分页器
+                    pagination: {
+                        el: '.swiper-pagination',
+                    }
+                })
+            }
+        })
+        
+        var vm =new Vue({
+            el:"#app",
+            data:{
+                datalist:[],
+            },
+            mounted() {
+                setTimeout(()=>{
+                    this.datalist= ["1111","22222","33333"]
+                },2000)
+            },
+        })
+    </script>
+
+</body>
+
+</html>
