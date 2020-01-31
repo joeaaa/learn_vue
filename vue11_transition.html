@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/animate.min.css">
+    <script src=""></script>
+    <script src='./lib/vue.js'></script>
+
+    <style>
+        /* transition */
+        .clickfade-enter-active, .clickfade-leave-active {
+            transition: all 1s;
+        }
+        .clickfade-enter, .clickfade-leave-to {
+            opacity: 0;
+            transform: translate(150px);
+        }
+
+        .clickbounce-enter-active {
+            animation: bounce-in 2.5s;
+        }
+        .clickbounce-leave-active {
+            animation: bounce-in 2.5s reverse;
+        }
+        /* 关键帧设置 */
+        @keyframes bounce-in {
+            0% {
+                opacity: 0;
+                transform: translate(150px);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0px);
+            }
+        }
+
+        /* transition group */
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+        .bounce-leave-active {
+            animation: bounce-in .5s reverse;
+        }
+        @keyframes bounce-in {
+            0% {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+     
+            100% {
+                transform: translateX(0px);
+                opacity: 1;
+            }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="isShow = !isShow">click to show</button>
+        <!-- 单元素过渡 -->
+        <transition name="clickfade">
+            <div v-show="isShow">hello!</div>
+        </transition>
+        <transition name="clickbounce">
+            <div v-show="isShow">come and join me ! 🇳🇿</div>
+        </transition>
+        <!-- 多元素过渡 -->
+        <transition name="clickbounce" mode='in-out'>
+            <p v-if="isShow" key='a'>Lalalala</p>
+            <p v-else key='b'>Babababa</p>
+        </transition>
+
+        <!-- 多列表过渡 -->
+        <input type="text" v-model="mytext"/> {{mytext}}
+        <button @click="handleAddClick">add</button>
+        <transition-group tag="ul" name="bounce">
+            <li v-for="(data,index) in datalist" :key="data">
+                {{data}}---{{index}}
+                <button @click="handleDelClick(index)">del</button>
+            </li>
+        </transition-group>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                isShow: false,
+                datalist:[],
+                mytext:''
+            },
+            methods:{
+                handleAddClick(){
+                    this.datalist.push(this.mytext)
+                },
+                handleDelClick(index){
+                    console.log("delete",index);
+                    //splice
+                    this.datalist.splice(index,1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
