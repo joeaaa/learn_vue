@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <script src='./lib/vue.js'></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="data in datalist" :key="data.id">
+                <h3>{{data.nm}}</h3>
+                <img :src="data.img | picpath">
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // picpath
+        Vue.filter("picpath",function(data){
+            return data.replace("w.h", "128.180")
+        })
+
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                datalist:[]
+            },
+            mounted(){
+                axios.get("./asserts/test.json").then(res=>{
+                    console.log(res.data)
+                    this.datalist = res.data.movieList
+                })
+            },
+            // methods:{
+            //     changepath(path)
+            // }
+        })
+    </script>
+
+</body>
+
+</html>
